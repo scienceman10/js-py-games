@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<!--https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_Breakout_game_pure_JavaScript/Create_the_Canvas_and_draw_on_it-->
+<script>
+    
+</script>
+<html>
+<head>
+    <style>
+        #c {background:url("http://thumbs.dreamstime.com/x/wheat-field-view-above-3292759.jpg"); }
+    </style>
+    <title>bee game</title>
+    <h1>bee game</h1>
+</head>
+<body onkeydown = "if (event.keyCode == 38) game();
+                   if (event.keyCode == 37) Bmove('left');
+                   if (event.keyCode == 39) Bmove('right');
+                   if (event.keyCode == 13) location.reload();" onload = "loadGame();">
+<p>this game is not finished!</p>
+<canvas id="c" width="400" height="400"></canvas>
+</body>
+<script>
+var rawC = document.getElementById("c");
+var c = rawC.getContext("2d");
+
+var hscore = 0;
+var color = "";
+var oldColor = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
+var a = 0;
+var p = document.getElementById("p");
+var z = document.createTextNode("press up to start");
+var Bx = 200;
+var By = 200;
+var score = 0;
+var RN = 0;
+var RN2 = 0;
+var ychange = 20;
+var y = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var x = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+/*function draw() {
+    c.clearRect(0, 0, c.width, c.height);
+    c.beginPath();
+    c.arc(50, 50, 10, 0, Math.PI*2);
+    c.fillStyle = "#0095DD";
+    c.fill();
+    c.closePath();
+    
+}
+setInterval(draw, 70);*/
+function loadGame() {
+    c.fillStyle = "#0000A0"
+    c.font = "25px Arial";
+    c.fillText("press up to start", 200, 200);
+}
+function end(cause) {
+    var cause == cause;
+    score > hscore? hscore = score: score = score;
+    if (cause == "") {
+        c.font = "15px Arial"
+        c.fillText("TIME UP \n score:" + score + "\nHigh score:" + hscore + "\nup=play again");
+    }
+}
+function drawBee() {
+    c.beginPath();
+    c.arc(Bx, By, 25, 0, Math.PI*2)
+    c.fillStyle = "#FFFF00"
+    c.fill();
+    c.closePath();
+    
+    return;
+} 
+function Bmove(key) {
+    var key = key;
+    if (key == "left") {Bx = Bx - 40}
+    if (key == "right") {Bx = Bx + 40}
+    drawBee();
+    return;
+    
+}
+function game() {
+    
+    function draw() {
+        c.clearRect(0, 0, rawC.width, rawC.height);
+        drawBee();
+        RN = Math.round(Math.random());
+        RN2 = Math.floor((Math.random() * 10) + 1) * 40;
+        for (i = 0; i < a; i++) {if (x[i] == Bx && y[i] == By) {score++;}
+            
+        }
+        RN==0? color = "#FF0000": color = "#800080";
+        for (i = 0; i < a; i++) {
+            y[i] = y[i] + ychange;
+            c.beginPath();
+            c.arc(x[i], y[i], 10, 0, Math.PI*2);
+            c.fillStyle = oldColor[i];
+            c.fill();
+            c.closePath();
+        }
+        c.beginPath();
+        c.arc(RN2, y[a], 10, 0, Math.PI*2);
+        c.fillStyle = color
+        c.fill();
+        c.closePath();
+        x[a] = RN2; oldColor[a] = color;
+        c.fillStyle = "#0000A0";
+        c.font = "20px Arial";
+        c.fillText(score, 20, 20);
+        a++
+        if (a > x.length) { end("t");}
+    }
+    
+    setInterval(draw, 200);
+}
+
+
+
+</script>
+</html>

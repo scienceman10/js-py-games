@@ -14,7 +14,7 @@
 <body onkeydown = "if (event.keyCode == 38) game();
                    if (event.keyCode == 37) Bmove('left');
                    if (event.keyCode == 39) Bmove('right');
-                   if (event.keyCode == 13) location.reload();" onload = "loadGame();">
+                   if (event.keyCode == 13) location.reload();" onload = "gameSE("start");">
 <p>this game is not finished!</p>
 <canvas id="c" width="400" height="400"></canvas>
 </body>
@@ -47,10 +47,17 @@ var x = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     
 }
 setInterval(draw, 70);*/
-function loadGame() {
-    c.fillStyle = "#0000A0"
+function gameSE(SE) {
+    if (SE == "start") {
+    c.fillStyle = "#0000A0";
     c.font = "25px Arial";
     c.fillText("press up to start", 200, 200);
+    } else if (SE == "time") {
+        c.font = "20px Arial";
+        c.fillStyle = "#0000A0";
+        c.fillText("TIME UP!", 200, 150);
+        c.fillText("score:" + score, 300, 150)
+    }
 }
 function end(cause) {
     var cause == cause;
@@ -106,7 +113,7 @@ function game() {
         c.font = "20px Arial";
         c.fillText(score, 20, 20);
         a++
-        if (a > x.length) { end("t");}
+        if (a > x.length) { gameSE("time");}
     }
     
     setInterval(draw, 200);

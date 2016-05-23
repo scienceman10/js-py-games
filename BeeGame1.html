@@ -55,6 +55,7 @@ function gameSE(SE) {
     c.fillText("press up to start", 200, 200);
     } else /*if (SE == "time") */{
         score > hscore? hscore = score : score = score;
+        document.cookie = "high Score=" + hscore + "; "
         c.font = "20px Arial";
         c.fillStyle = "#0000A0";
         c.fillText("TIME UP!", 100, 100);

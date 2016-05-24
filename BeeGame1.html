@@ -53,15 +53,49 @@ function gameSE(SE) {
     c.fillStyle = "#0000A0";
     c.font = "25px Arial";
     c.fillText("press up to start", 200, 200);
-    } else /*if (SE == "time") */{
-        score > hscore? hscore = score : score = score;
-        document.cookie = "high Score=" + hscore + "; "
+    } else if (SE == "time") {
+        var oldHighScore = getCookie("high Score");
+        if (oldHighScore !="") {
+            hscore = oldHighScore
+        } 
+    
+        if (score > hscore) {
+            document.cookie = "high Score=" + score + "; expires=Thu, 01 Dec 2020 12:00:00 UTC;";
+            hscore = score;
+            c.font = "20px Arial";
+            c.fillStyle = "#0000A0";
+            c.fillText("TIME UP!", 100, 100);
+            c.fillText("score:" + score, 100, 150);
+            c.fillText("high score:" + hscore, 100, 175);
+        } else {
+            if (oldHighScore !="") {
+                c.font = "20px Arial";
+                c.fillStyle = "#0000A0";
+                c.fillText("TIME UP!", 100, 100);
+                c.fillText("score:" + score, 100, 150);
+                c.fillText("high score:" + oldHighScore, 100, 175);
+            }
+        }
         c.font = "20px Arial";
-        c.fillStyle = "#0000A0";
-        c.fillText("TIME UP!", 100, 100);
-        c.fillText("score:" + score, 100, 150);
-        c.fillText("high score:" + hscore, 100, 175);
+           c.fillStyle = "#0000A0";
+           c.fillText("TIME UP!", 100, 100);
+           c.fillText("score:" + score, 100, 150);
+           c.fillText("high score:" + oldHighScore, 100, 175);
     }
+    function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length,c.length);
+        }
+    }
+    return "";
+}
 }
 
 function drawBee() {
@@ -110,7 +144,7 @@ function game() {
         c.font = "20px Arial";
         c.fillText(score, 20, 20);
         a++
-        a > 275? gameSE("time"):game();
+        a > 275? gameSE("time"):a = a;
     }
     
     setInterval(draw, 200);

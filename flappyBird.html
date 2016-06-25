@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<!--
+flappy bird
+By Schuyler4,
+with jumping done by me-->
+<html>
+<head>
+	<title>FlappyBird</title>
+	<style>
+		#canvas {
+			border: 2px solid black;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="600" height="400"></canvas>
+	<script>
+		var canvas = document.getElementById("canvas")
+		var ctx = canvas.getContext("2d")
+
+		gameStart = true
+
+		jumpTime = 0
+
+		falling = true
+
+		document.addEventListener("click", function(){
+			if(gameStart == false) {
+				gameStart = true
+			}
+			falling = false
+			if(jumpTime <= 11) {
+				falling = true
+			}
+			moveBird()
+			},false)
+
+		var FlappyBird = {
+			width:30,
+			height:30,
+			x:50,
+			y:canvas.height / 2 - 15,
+			draw: function() {
+				ctx.beginPath()
+				ctx.rect(this.x, this.y, this.width, this.height)
+				ctx.fillStyle = "yellow"
+				ctx.fill()
+				ctx.closePath()
+			},
+			fall: function() {
+				if(gameStart == true && falling == true) {
+					this.y += 1
+					return;
+				}
+				if(falling == false) {
+					this.y -= 2
+				}
+			}
+		}
+
+		function getRandomArbitrary(min, max) {
+    		return Math.random() * (max - min) + min;
+		}
+
+		var min = 100
+		var max = 150
+
+		var pipeGen1 = getRandomArbitrary(min, max) 
+		var pipeGen2 = getRandomArbitrary(min, max)
+		var pipeGen3 = getRandomArbitrary(min, max)
+		var pipeGen4 = getRandomArbitrary(min, max)
+		var pipeGen5 = getRandomArbitrary(min, max) 
+		var pipeGen6 = getRandomArbitrary(min, max)
+		var pipeGen7 = getRandomArbitrary(min, max)
+		var pipeGen8 = getRandomArbitrary(min, max)
+
+		console.log(pipeGen1)
+
+		function pipes(width,height,x,y){
+			this.x = x
+			this.y = y
+			this.width = width
+			this.height = height
+		}
+		var pipe1 = new pipes(30,pipeGen1,300,0)
+		var pipe2 = new pipes(30,pipeGen2,450,0)
+		var pipe3 = new pipes(30,pipeGen3,600,0)
+		var pipe4 = new pipes(30,pipeGen4,750,0)
+
+		var bpipe1 = new pipes(30,pipeGen5,300,200 + pipeGen5)
+		var bpipe2 = new pipes(30,pipeGen6,450,200 + pipeGen6)
+		var bpipe3 = new pipes(30,pipeGen7,600,200 + pipeGen7)
+		var bpipe4 = new pipes(30,pipeGen8,750,200 + pipeGen8)
+
+		function drawPipes() {
+			ctx.beginPath()
+			ctx.rect(pipe1.x,pipe1.y,pipe1.width,pipe1.height)
+			ctx.rect(pipe2.x,pipe2.y,pipe2.width,pipe2.height)
+			ctx.rect(pipe3.x,pipe3.y,pipe3.width,pipe3.height)
+			ctx.rect(pipe4.x,pipe4.y,pipe4.width,pipe4.height)
+			ctx.rect(bpipe1.x,bpipe1.y,bpipe1.width,bpipe1.height)
+			ctx.rect(bpipe2.x,bpipe2.y,bpipe2.width,bpipe2.height)
+			ctx.rect(bpipe3.x,bpipe3.y,bpipe3.width,bpipe3.height)
+			ctx.rect(bpipe4.x,bpipe4.y,bpipe4.width,bpipe4.height)
+			ctx.fillStyle = "green"
+			ctx.fill()
+			ctx.closePath()
+		}
+		function movePipes() {
+			pipe1.x -= 1
+			pipe2.x -= 1
+			pipe3.x -= 1
+			pipe4.x -= 1
+			bpipe1.x -= 1
+			bpipe2.x -= 1
+			bpipe3.x -= 1
+			bpipe4.x -= 1
+			if(pipe1.x + 30  < 0) {
+				pipe1.x = 600
+				bpipe1.x = 600
+			}
+			if(pipe2.x + 30 < 0) {
+				pipe2.x = 600
+				bpipe2.x = 600
+			}
+			if(pipe3.x + 30 < 0) {
+				pipe3.x = 600
+				bpipe3.x = 600
+			}
+			if(pipe4.x + 30 < 0) {
+				pipe4.x  = 600
+				bpipe4.x = 600
+			}
+			
+		}
+
+
+		function draw() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height)
+			FlappyBird.draw()
+			FlappyBird.fall()
+			drawPipes()
+			movePipes() 
+			if(falling == false) {
+				jumpTime += 1	
+			}
+			else {
+				jumpTime = 0
+			}
+			console.log(jumpTime)
+		}
+		setInterval(draw, 10)
+
+		function moveBird() {
+			var x = 0;
+			function mb() {x < 50?FlappyBird.y -= 2 : x = x; x++;}
+			setInterval(mb, 8);
+			var a = 0;
+		    function kb() {a < 55?FlappyBird.y -= 1 : x = x; a++;}
+			setInterval(kb, 10);
+			
+
+		}
+	</script>
+</body>
+</html>
